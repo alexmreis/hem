@@ -8,7 +8,7 @@ isAbsolute = (path) -> /^\//.test(path)
 modulerize = (id, filename = id) -> 
   ext = extname(filename)
   modName = join(dirname(id), basename(id, ext))
-  modName.replace('\\', '/');
+  modName.replace('/\\/g', '/');
 
 modulePaths = Module._nodeModulePaths(process.cwd())
 
@@ -35,7 +35,7 @@ module.exports = (request, parent = repl) ->
   
   throw("Load path not found for #{filename}") if dir in invalidDirs
     
-  id = filename.replace("#{dir}/", '')
+  id = filename.replace(dir + join('_', '_')[1], '')
 
   [modulerize(id, filename), filename]
   
